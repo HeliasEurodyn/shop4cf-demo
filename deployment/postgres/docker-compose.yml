@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  db:
+    container_name: postgres_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgresuser
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: camunda2
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 54321:8080
+      
+volumes:
+    postgres:

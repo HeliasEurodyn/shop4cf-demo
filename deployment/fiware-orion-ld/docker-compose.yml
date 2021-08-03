@@ -1,0 +1,65 @@
+version: "3.7"
+services:
+  orion:
+    container_name: mpms_orion_ld
+    image: fiware/orion-ld
+    hostname: orion
+    container_name: fiware-orion
+    expose:
+      - "10260"
+    ports:
+      - "10260:1026"
+    depends_on:
+      - mongo-db
+    command: -dbhost mongo-db -logLevel DEBUG
+  mongo-db:
+    container_name: mpms_mongodb
+    image: mongo:3.6
+    hostname: mongo-db
+    container_name: db-mongo
+    ports:
+      - "27017:27017" 
+    networks:
+      - default
+    command: --nojournal
+    volumes:
+      - mongo-db:/data 
+  db:
+    container_name: mpms_postgres_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgresuser
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: camunda2
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+  adminer:
+    container_name: mpms_adminer
+    image: adminer
+    restart: always
+    ports:
+      - 54321:8080        
+  mpms-backend:
+    container_name: mpms_backend_with_camunda
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        CAMUNDA_USER: demo
+        CAMUNDA_PASSWORD: demo
+        FIWARE_URL: http://orion:10260
+        POSTGRE_URL: db:5432
+        POSTGRE_DBNAME: camunda2
+        POSTGRE_USER: postgresuser
+        POSTGRE_PASSWORD: postgrespassword
+    image: mpms-backend
+    ports:
+      - "20003:20000"
+    restart: always
+volumes:
+  postgres:
+  mongo-db: ~

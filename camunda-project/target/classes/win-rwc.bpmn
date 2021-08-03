@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1yrluh8" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.14.0">
+  <bpmn:process id="teams" name="teams" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="start">
+      <bpmn:outgoing>Flow_1h4shal</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1h4shal" sourceRef="StartEvent_1" targetRef="Activity_1mgjbuo" />
+    <bpmn:userTask id="Activity_1mgjbuo" name="Beat all teams">
+      <bpmn:incoming>Flow_1h4shal</bpmn:incoming>
+      <bpmn:outgoing>Flow_1d0mhv6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_16fovbk" name="Ireland wins">
+      <bpmn:incoming>Flow_1d0mhv6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1d0mhv6" sourceRef="Activity_1mgjbuo" targetRef="Event_16fovbk" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="teams">
+      <bpmndi:BPMNEdge id="Flow_1d0mhv6_di" bpmnElement="Flow_1d0mhv6">
+        <di:waypoint x="640" y="120" />
+        <di:waypoint x="892" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1h4shal_di" bpmnElement="Flow_1h4shal">
+        <di:waypoint x="208" y="120" />
+        <di:waypoint x="540" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="172" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="179" y="145" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1t2ras5_di" bpmnElement="Activity_1mgjbuo">
+        <dc:Bounds x="540" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16fovbk_di" bpmnElement="Event_16fovbk">
+        <dc:Bounds x="892" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="880" y="145" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

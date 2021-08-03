@@ -1,0 +1,65 @@
+<form class="form-horizontal" role="form">
+    <legend>Assigned flight plan on asset {{asset_name}} (inspection id: {{inspection_id}})</legend>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <label for="description">Flight plan description:</label>
+            <textarea class="form-control" readonly rows="5" id="description">{{flight_plan_description}}</textarea>
+        </div>
+    </div>
+
+    <div class="form-confirm-mission">
+        <div class="col-md-12">
+            <label>Do you accept the above mission?</label>
+            <p><input type="radio" value="yes" ng-model="decision_radio" ng-change="changeDecision()">Yes</input></p>
+            <p><input type="radio" value="no" ng-model="decision_radio" ng-change="changeDecision()">No</input></p>
+        </div>
+    </div>
+
+    <div class="form-group" ng-show="mission_declined" id="missionDeclinedReasonGroup">
+        <div class="col-md-12">
+            <label for="missionDeclinedReasonText">Mission declined reason:</label>
+            <textarea class="form-control" rows="5" id="missionDeclinedReasonText" cam-variable-name="MISSION_A_DECLINED_REASON"
+                      cam-variable-type="String" ng-required="text_required"></textarea>
+            <div class="help-block">This field is required</div>
+        </div>
+    </div>
+
+    <script cam-script type="text/form-script">
+        var variableManager = camForm.variableManager;
+        $scope.mission_declined=false;
+        $scope.text_required=true;
+
+        camForm.on('form-loaded', function(){
+            variableManager.fetchVariable('FLIGHT_PLAN_DESCRIPTION');
+            variableManager.fetchVariable('INSPECTION_ID');
+            variableManager.fetchVariable('ASSET_NAME');
+            variableManager.fetchVariable('MISSION_ACCEPTED');
+        })
+
+        camForm.on('variables-fetched', function(){
+            $scope.flight_plan_description=variableManager.variable('FLIGHT_PLAN_DESCRIPTION').value;
+            $scope.inspection_id=variableManager.variable('INSPECTION_ID').value;
+            $scope.asset_name=variableManager.variable('ASSET_NAME').value;
+        })
+
+        $scope.changeDecision = function(){
+            if ($scope.decision_radio=="yes") {
+                $scope.mission_declined= false;
+                $scope.text_required=false;
+                $scope.options.disableCompleteButton=false;
+            }
+            else {
+                $scope.mission_declined= true;
+                $scope.text_required=true;
+            }
+        }
+
+        camForm.on('submit', function() {
+            console.log("Mission accepted: " + !$scope.mission_declined)
+            variableManager.variable('MISSION_ACCEPTED').value=!$scope.mission_declined;
+        })
+
+
+    </script>
+</form>

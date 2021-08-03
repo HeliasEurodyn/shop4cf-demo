@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+    mongo:
+       image: mongo
+       container_name: mongo-db
+       command: --nojournal
+    orion:
+       image: fiware/orion
+       container_name: fiware-orion
+       links:
+         - mongo
+       ports:
+         - "10260:1026"
+       command: -dbhost mongo
+       depends_on:
+         - mongo

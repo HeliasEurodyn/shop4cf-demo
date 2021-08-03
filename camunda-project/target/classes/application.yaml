@@ -1,0 +1,30 @@
+server:
+    port: 20000
+
+fiwareurl: http://localhost:10260
+
+postgreUrl: localhost:5432
+postgreDbName: camunda2
+postgreUser: postgresuser
+postgrePassword: postgrespassword
+
+camundaUser: demo
+camundaPassword: demo
+
+camunda:
+  bpm:
+    admin-user:
+      id: ${camundaUser}
+      password: ${camundaPassword}
+    database:
+      type: postgres
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${postgreUser}
+    password: ${postgrePassword}
+    url: jdbc:postgresql://${postgreUrl}/${postgreDbName}
+
+hibernate:
+  dialect: org.hibernate.dialect.PostgreSQLDialect
